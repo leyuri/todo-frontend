@@ -1,11 +1,41 @@
 <template>
   <div class="hello">
-    오늘 해야 할 일
-    <ul v-if="toDoItems && toDoItems.length">
-      <li v-for="toDoItem of toDoItems" v-bind:key="toDoItem">
-        {{toDoItem.title}}
-      </li>
-    </ul>
+    <b-card
+      header="What to do today 📝"
+      style="max-width: 40rem; margin: auto; margin-top: 10vh"
+      class="mb-2"
+      border-variant="info"
+      align="left"
+    >
+      <b-form-group id="to-do-input">
+        <b-container fluid>
+          <b-row class="my-2 mb-4">
+            <b-col sm="10">
+              <b-form-input
+                v-model="title"
+                type="text"
+                placeholder="Write down new things to do."
+              />
+            </b-col>
+            <b-col lg="2">
+              <b-button variant="outline-info"> Add </b-button>
+            </b-col>
+          </b-row>
+        </b-container>
+      </b-form-group>
+
+      <b-list-group v-if="toDoItems && toDoItems.length">
+        <b-list-group-item
+          v-for="toDoItem of toDoItems"
+          v-bind:data="toDoItem.title"
+          v-bind:key="toDoItem.id"
+        >
+          <b-form-checkbox v-model="toDoItem.done" class="m-2">
+            {{toDoItem.title}}
+          </b-form-checkbox>
+        </b-list-group-item>
+      </b-list-group>
+    </b-card>
   </div>
 </template>
 
