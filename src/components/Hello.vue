@@ -1,31 +1,32 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="http://chat.vuejs.org/" target="_blank" rel="noopener">Vue Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank" rel="noopener">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
+    오늘 해야 할 일
+    <ul v-if="toDoItems && toDoItems.length">
+      <li v-for="toDoItem of toDoItems" v-bind:key="toDoItem">
+        {{toDoItem.title}}
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'hello',
-  data () {
+  data: () => {
     return {
-      msg: 'Hello World!'
+      toDoItems: []
     }
+  },
+  created () {
+    axios.get('http://127.0.0.1:5000/todo/')
+      .then(response => {
+        this.toDoItems = response.data.map(r => r.data)
+      })
+      .catch(e => {
+        console.log('error : ', e)
+      })
   }
 }
 </script>
@@ -50,3 +51,4 @@ a {
   color: #35495E;
 }
 </style>
+
