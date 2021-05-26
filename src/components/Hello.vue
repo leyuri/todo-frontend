@@ -12,13 +12,14 @@
           <b-row class="my-2 mb-4">
             <b-col sm="10">
               <b-form-input
-                v-model="title"
+                v-model="newToDoItemRequest.title"
                 type="text"
                 placeholder="Write down new things to do."
+                v-on:keyup.enter="createToDo"
               />
             </b-col>
             <b-col lg="2">
-              <b-button variant="outline-info"> Add </b-button>
+              <b-button variant="outline-info" v-on:click="createToDo"> Add </b-button>
             </b-col>
           </b-row>
         </b-container>
@@ -42,21 +43,41 @@
 <script>
 import axios from 'axios'
 
+let baseUrl = 'http://127.0.0.1:5000/todo/'
 export default {
   name: 'hello',
   data: () => {
     return {
-      toDoItems: []
+      toDoItems: [],
+      newToDoItemRequest: {}
+    }
+  },
+  methods: {
+    initToDoList: function () {
+      let vm = this
+      axios.get(baseUrl)
+        .then(response => {
+          vm.toDoItems = response.data.map(r => r.data)
+        })
+        .catch(e => {
+          console.log('error : ', e)
+        })
+    },
+    createToDo: function (event) {
+      event.preventDefault()
+      let vm = this
+      if (!vm.newToDoItemRequest.title) return
+      axios.post(baseUrl, vm.newToDoItemRequest)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   created () {
-    axios.get('http://127.0.0.1:5000/todo/')
-      .then(response => {
-        this.toDoItems = response.data.map(r => r.data)
-      })
-      .catch(e => {
-        console.log('error : ', e)
-      })
+    this.initToDoList()
   }
 }
 </script>
