@@ -70,6 +70,8 @@ export default {
       axios.post(baseUrl, vm.newToDoItemRequest)
         .then(response => {
           console.log(response)
+          vm.initToDoList()
+          vm.newToDoItemRequest = {}
         })
         .catch(error => {
           console.log(error)
