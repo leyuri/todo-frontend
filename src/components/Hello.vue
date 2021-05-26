@@ -15,30 +15,37 @@
                 v-model="newToDoItemRequest.title"
                 type="text"
                 placeholder="Write down new things to do."
-                v-on:keyup.enter="createToDo"
+                @keyup.enter="createToDo"
               />
             </b-col>
             <b-col lg="2">
-              <b-button variant="outline-info" v-on:click="createToDo"> Add </b-button>
+              <b-button variant="outline-info" v-on:click="createToDo">
+                Add
+              </b-button>
             </b-col>
           </b-row>
         </b-container>
       </b-form-group>
 
       <b-list-group v-if="toDoItems && toDoItems.length">
-        <b-list-group-item
+        <b-list-group-item 
           v-for="toDoItem of toDoItems"
-          v-bind:data="toDoItem.title"
-          v-bind:key="toDoItem.id"
+          v-bind:data="toDoItem.id"
+          v-bind:key="toDoItem.id" style="display: flex;"
         >
-          <b-form-checkbox v-model="toDoItem.done" class="m-2">
-            {{toDoItem.title}}
+          <b-form-checkbox style="margin-right: 10px;"
+            v-model="toDoItem.done"
+            v-on:change="markDone(toDoItem)"
+          >
           </b-form-checkbox>
-        </b-list-group-item>
+          <span v-if="toDoItem.done" style="text-decoration: line-through; color:#D3D3D3;">{{toDoItem.title}}</span>
+          <span v-else>{{toDoItem.title}}</span>
+        </b-list-group-item >
       </b-list-group>
     </b-card>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios'
@@ -76,6 +83,25 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    markDone: function (toDoItem) {
+      if (!toDoItem) return
+      let vm = this
+      toDoItem.done = !toDoItem.done
+      if (toDoItem.done === true) {
+        toDoItem.done = false
+      } else if (toDoItem.done === false) {
+        toDoItem.done = true
+      } else {
+        return
+      }
+      axios.put(baseUrl, toDoItem)
+        .then(response => {
+          vm.initToDoList()
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   created () {
@@ -86,7 +112,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 
@@ -101,7 +128,6 @@ li {
 }
 
 a {
-  color: #35495E;
+  color: #35495e;
 }
 </style>
-
