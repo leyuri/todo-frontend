@@ -1,21 +1,26 @@
-# to-do-frontend
+# todo-frontend
 
-> A Vue.js project
+### Development environment
+- vue.js + javascript + bootstrap
+- springboot
+- mongoDB
 
-## Build Setup
+### Architecture
 
-``` bash
-# install dependencies
-npm install
+![](https://images.velog.io/images/leyuri/post/5a3ae7b3-e8a0-4fea-9e96-3a9d65ba853e/22222.PNG)
 
-# serve with hot reload at localhost:8080
-npm run dev
+### Features
+- REST API
+- 할일 목록 확인
+- 할일 목록 수정
+- 할일 추가하기 
 
-# build for production with minification
-npm run build
+### Screenshots
+|목록 확인|목록 수정 및 추가|
+|------|---|
+|![](https://images.velog.io/images/leyuri/post/81ec5ad5-0756-4fe8-857e-59f6552e2e55/%EC%BA%A11.PNG)|![](https://images.velog.io/images/leyuri/post/f9eb64cd-f8a4-4303-81b4-276e19ccf003/%EC%BA%A12.PNG)|
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### Detail
+프로젝트 과정 및 느낀점 : <a href="https://velog.io/@leyuri/Project-TO-DO-List-%EB%A7%8C%EB%93%A4%EA%B8%B0">[Project] TO-DO List 만들기 (Spring Boot + Vue.js + MongoDB + Docker)</a><br>
+todo-backend : https://github.com/leyuri/todo-backend
